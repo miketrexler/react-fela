@@ -3,7 +3,7 @@ import { Component, PropTypes } from 'react'
 export default class Provider extends Component {
   getChildContext() {
     return {
-      fela: this.props.renderer.render.bind(this.props.renderer)
+      fela: this.props.renderer.render
     }
   }
 
