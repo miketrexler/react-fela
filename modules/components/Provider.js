@@ -1,9 +1,26 @@
 import { Component, PropTypes } from 'react'
 
+import felaShape from '../helpers/felaShape'
+
 export default class Provider extends Component {
+
+  static propTypes = {
+    renderer: PropTypes.object.isRequired
+  }
+
+  static childContextTypes = {
+    fela: felaShape
+  }
+
   getChildContext() {
+    const { renderRule, renderKeyframe, renderFont, renderStatic } = this.props.renderer
     return {
-      fela: this.props.renderer.render
+      fela: {
+        renderRule,
+        renderKeyframe,
+        renderFont,
+        renderStatic
+      }
     }
   }
 
@@ -11,6 +28,3 @@ export default class Provider extends Component {
     return this.props.children
   }
 }
-
-Provider.propTypes = { renderer: PropTypes.object.isRequired }
-Provider.childContextTypes = { fela: PropTypes.func.isRequired }

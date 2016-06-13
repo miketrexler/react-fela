@@ -1,46 +1,36 @@
-import { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+
+import felaShape from './felaShape'
 
 const defaultMapper = props => props
 
 export default function bindFela(mapper = defaultMapper) {
-  return Comp => {
-    // handle functional components
-    if (!Comp.prototype.setState) {
-      const enhancedComponent = (props, context) => {
-        const fela = (selector, additionalProps, plugins) => context.fela(selector, additionalProps ? {
-          ...mapper(props),
-          ...additionalProps
-        } : mapper(props), plugins)
-        return Comp({ ...props, fela }, context)
-      }
-
-      enhancedComponent.contextTypes = {
-        ...Comp.contextTypes,
-        fela: PropTypes.func.isRequired
-      }
-
-      return enhancedComponent
-    }
-
-    // handle class components
+  return Comp => (
     class EnhancedComponent extends Component {
+
+      static contextTypes = {
+        ...Comp.contextTypes,
+        fela: felaShape
+      }
+
       componentWillMount() {
-        this.fela = (selector, additionalProps, plugins) => this.context.fela(selector, additionalProps ? {
-          ...mapper(this.props, this.state),
-          ...additionalProps
-        } : mapper(this.props, this.state), plugins)
+        const { renderFont, renderStatic } = this.context.fela
+
+        this.fela = [ 'renderRule', 'renderKeyframe' ].reduce((carry, method) => {
+          carry[method] = (func, additionalProps) => (
+            this.context.fela[method](func, additionalProps ? {
+              ...mapper(this.props),
+              ...additionalProps
+            } : mapper(this.props)
+          ))
+
+          return carry
+        }, { renderFont, renderStatic })
       }
 
       render() {
         return <Comp {...this.props} fela={this.fela} />
       }
     }
-
-    EnhancedComponent.contextTypes = {
-      ...Comp.contextTypes,
-      fela: PropTypes.func.isRequired
-    }
-
-    return EnhancedComponent
-  }
+  )
 }

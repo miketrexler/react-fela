@@ -1,16 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 
 export default class ChildIndex extends Component {
+
+  static defaultProps = { items: 10 }
+  static propTypes = { items: PropTypes.number.isRequired }
+  static contextTypes = { fela: PropTypes.object.isRequired }
+
   render() {
-    const { fela } = this.context
+    const { fela: { renderRule } } = this.context
     // create a small list of items to demonstrate nth-child, et cetera
     const arr = new Array(this.props.items + 1).join(',').split('').map((item, index) => index + 1)
-    let list = arr.map((text, index) => {
-      return <li className={fela(styles)} key={'.' + index}>
-               ListItem&nbsp;
-               {text}
-             </li>
-    })
+    let list = arr.map((text, index) => (
+      <li className={renderRule(styles)} key={`.${index}`}>
+        ListItem&nbsp;
+        {text}
+      </li>
+    ))
 
     return (
       <div>
@@ -21,9 +26,6 @@ export default class ChildIndex extends Component {
     )
   }
 }
-ChildIndex.defaultProps = { items: 10 }
-ChildIndex.propTypes = { items: PropTypes.number.isRequired }
-ChildIndex.contextTypes = { fela: PropTypes.func.isRequired }
 
 const styles = props => ({
   color: 'darkgray',

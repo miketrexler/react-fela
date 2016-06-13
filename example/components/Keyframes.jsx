@@ -1,16 +1,15 @@
-import React, { Component, PropTypes } from 'react'
-import { Keyframe } from 'fela'
+import React, { PropTypes } from 'react'
 
-const Keyframes = (props, { fela }) => (
-<div className={fela(styles.container, { name: fela(positionFrames) })}>
-  <div className={fela(styles.box, { name: fela(backgroundFrames) })} />
+const Keyframes = (props, { fela: { renderRule, renderKeyframe } }) => (
+<div className={renderRule(styles.container, { name: renderKeyframe(positionFrames) })}>
+  <div className={renderRule(styles.box, { name: renderKeyframe(backgroundFrames) })} />
 </div>
 )
 
-Keyframes.contextTypes = { fela: PropTypes.func.isRequired }
+Keyframes.contextTypes = { fela: PropTypes.object.isRequired }
 export default Keyframes
 
-const positionFrames = new Keyframe(props => ({
+const positionFrames = props => ({
   '0%': {
     paddingLeft: 0,
     paddingTop: 100
@@ -29,9 +28,9 @@ const positionFrames = new Keyframe(props => ({
     paddingTop: 100,
     paddingLeft: 0
   }
-}))
+})
 
-const backgroundFrames = new Keyframe(props => ({
+const backgroundFrames = props => ({
   '0%': {
     background: 'blue'
   },
@@ -47,7 +46,7 @@ const backgroundFrames = new Keyframe(props => ({
   '100%': {
     background: 'blue'
   }
-}))
+})
 
 const styles = {
   container: props => ({
