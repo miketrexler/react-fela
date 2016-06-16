@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 
 export default class UserAction extends Component {
+
+  static contextTypes = { fela: PropTypes.object.isRequired }
+
   render() {
-    const { fela } = this.context
+    const { fela: { renderRule } } = this.context
     return (
       <div>
-        <div className={fela(styles.button) + ' ' + fela(styles.activeButton)}>Click me</div>
-        <div className={fela(styles.button) + ' ' + fela(styles.hoverButton)}>Hover me</div>
-        <div className={fela(styles.button) + ' ' + fela(styles.hoverActiveButton)}>Hover me, then Click me</div>
+        <div className={`${renderRule(styles.button)} ${renderRule(styles.activeButton)}`}>Click me</div>
+        <div className={`${renderRule(styles.button)} ${renderRule(styles.hoverButton)}`}>Hover me</div>
+        <div className={`${renderRule(styles.button)} ${renderRule(styles.hoverActiveButton)}`}>Hover me, then Click me</div>
       </div>
     )
   }
 }
-
-UserAction.contextTypes = { fela: PropTypes.func.isRequired }
-export default UserAction
 
 const styles = {
   button: () => ({

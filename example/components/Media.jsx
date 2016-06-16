@@ -1,13 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import bindPropsToFela from '../../modules/helpers/bindPropsToFela'
+import React from 'react'
+import bindFela from '../../modules/helpers/bindFela'
 
 const Media = ({ fela }) => (
-<div className={fela(styles)}>
+<div className={fela.renderRule(styles)}>
   Resize your window
 </div>
 )
 
-export default bindPropsToFela()(Media)
+export default bindFela()(Media)
 
 const styles = props => ({
   padding: 40,

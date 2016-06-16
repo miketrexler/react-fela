@@ -1,20 +1,22 @@
 import React, { Component, PropTypes } from 'react'
 
 export default class Container extends Component {
+
+  static contextTypes = { fela: PropTypes.object.isRequired }
+
   render() {
-    const { fela } = this.context
+    const { fela: { renderRule } } = this.context
     return (
-      <div className={fela(styles.container)}>
-        <h1 className={fela(styles.title)}>{this.props.title}</h1>
-        <pre className={fela(styles.desc)}>{this.props.description}</pre>
-        <div className={fela(styles.inner)}>
+      <div className={renderRule(styles.container)}>
+        <h1 className={renderRule(styles.title)}>{this.props.title}</h1>
+        <pre className={renderRule(styles.desc)}>{this.props.description}</pre>
+        <div className={renderRule(styles.inner)}>
           {this.props.children}
         </div>
       </div>
     )
   }
 }
-Container.contextTypes = { fela: PropTypes.func.isRequired }
 
 const styles = {
   container: () => ({

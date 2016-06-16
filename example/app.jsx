@@ -6,23 +6,21 @@ import Media from './components/Media.jsx'
 import Keyframes from './components/Keyframes.jsx'
 import Pseudo from './components/Pseudo.jsx'
 
-import bindStateToFela from '../modules/helpers/bindStateToFela'
+import bindFela from '../modules/helpers/bindFela'
 
 class App extends React.Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { offset: 20 }
-    this.move = this.move.bind(this)
-  }
 
-  move() {
-    this.setState({ offset: this.state.offset + 5 })
-  }
+  state = { offset: 20 }
+
+  move = () => this.setState({ offset: this.state.offset + 5 })
 
   render() {
+
     return (
       <div>
-        <h1 className={this.fela(selector)} onClick={this.move}>Fela Examples</h1>
+        <h1 className={this.props.fela.renderRule(selector, { top: this.state.offset })} onClick={this.move}>
+          Fela Examples
+        </h1>
         <Container group title="1. Pseudo classes">
           <Container title="1.1. user action">
             <UserAction />
@@ -49,7 +47,7 @@ class App extends React.Component {
   }
 }
 
-export default bindStateToFela(state => ({ top: state.offset }))(App)
+export default bindFela()(App)
 
 const selector = props => {
   return {

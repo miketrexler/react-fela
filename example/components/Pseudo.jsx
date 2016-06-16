@@ -1,16 +1,16 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
-const Pseudo = (props, { fela }) => (
+const Pseudo = (props, { fela: { renderRule } }) => (
   <div>
-    <div className={fela(styles.firstLetter)}>First letter is colored red.</div>
+    <div className={renderRule(styles.firstLetter)}>First letter is colored red.</div>
     <br/>
-    <div className={fela(styles.beforeAfter)}>Who's after me?</div>
+    <div className={renderRule(styles.beforeAfter)}>Who's after me?</div>
     <br/>
-    <input className={fela(styles.input)} placeholder="Webkit-based browsers show this placeholder in green" />
+    <input className={renderRule(styles.input)} placeholder="Webkit-based browsers show this placeholder in green" />
   </div>
 )
 
-Pseudo.contextTypes = { fela: PropTypes.func.isRequired }
+Pseudo.contextTypes = { fela: PropTypes.object.isRequired }
 export default Pseudo
 
 const styles = {

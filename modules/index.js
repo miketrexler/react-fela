@@ -1,9 +1,7 @@
 import Provider from './components/Provider'
-import bindPropsToFela from './helpers/bindPropsToFela'
-import bindStateToFela from './helpers/bindStateToFela'
+import bindFela from './helpers/bindFela'
 
 export default {
-  Provider: Provider,
-  bindPropsToFela: bindPropsToFela,
-  bindStateToFela: bindStateToFela
+  Provider,
+  bindFela
 }
