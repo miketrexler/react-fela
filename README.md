@@ -32,7 +32,7 @@ Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each pa
 
 ## Documentation
 #### [API reference](docs/api)
-* [`<Provider>`](docs/api/Provider.md)
+* [`<Provider renderer [mountNode]>`](docs/api/Provider.md)
 * [`connect(mapStylesToProps)`](docs/api/connect.md)
 
 ## Usage
