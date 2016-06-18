@@ -5,17 +5,16 @@ It provides all classNames using the `styles` prop.
 
 ## Arguments
 1. `mapStylesToProps` (*Function*): A function
-of `props` that returns a function of `renderer` which again returns an object of rendered classNames.<br>
-The signature is: `props => renderer => ({ /* classNames */ })`.
+of `props` that returns a function of `renderer` which again returns an object of rendered classNames. The signature is: `props => renderer => ({ /* classNames */ })`.
 
 ## Returns
 (*Function*): Component connector that passes the classNames to a React component.
 
 ## Example
 ```javascript
-import { connect } from 'react-fela'
+import { connect } from 'react-fela'
 
-const Header = ({ title, styles }) => (
+let Header = ({ title, styles }) => (
   <header className={styles.container}>
     <h1 className={styles.title}>{title}</h1>
   </header>
@@ -43,7 +42,7 @@ const mapStylesToProps = props => renderer => ({
   })
 })
 
-export default connect(mapStylesToProps)(Header)
+Header = connect(mapStylesToProps)(Header)
 
 ReactDOM.render(
   <Header
