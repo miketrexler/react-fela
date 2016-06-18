@@ -30,6 +30,13 @@ All of our components can now directly use the renderer from `context`.
 ```javascript
 import React, { PropTypes } from 'react'
 
+const selector = props => ({
+  fontSize: '12px',
+  fontWeight: 300,
+  color: props.color,
+  padding: '10px'
+})
+
 const App = (props, { renderer }) => {
   const className = renderer.renderRule(selector, { color: 'blue' })
 
@@ -42,11 +49,4 @@ const App = (props, { renderer }) => {
 
 App.contextTypes = { renderer: PropTypes.object }
 export default App
-
-const selector = props => ({
-  fontSize: '12px',
-  fontWeight: 300,
-  color: props.color,
-  padding: '10px'
-})
 ```
