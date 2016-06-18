@@ -1,8 +1,10 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-  typeof define === 'function' && define.amd ? define(['react'], factory) :
-  (global.ReactFela = factory(global.React));
-}(this, function (react) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react'), require('fela')) :
+  typeof define === 'function' && define.amd ? define(['react', 'fela'], factory) :
+  (global.ReactFela = factory(global.React,global.Fela));
+}(this, function (React,fela) { 'use strict';
+
+  var React__default = 'default' in React ? React['default'] : React;
 
   var babelHelpers = {};
 
@@ -44,31 +46,6 @@
     return target;
   };
 
-  babelHelpers.get = function get(object, property, receiver) {
-    if (object === null) object = Function.prototype;
-    var desc = Object.getOwnPropertyDescriptor(object, property);
-
-    if (desc === undefined) {
-      var parent = Object.getPrototypeOf(object);
-
-      if (parent === null) {
-        return undefined;
-      } else {
-        return get(parent, property, receiver);
-      }
-    } else if ("value" in desc) {
-      return desc.value;
-    } else {
-      var getter = desc.get;
-
-      if (getter === undefined) {
-        return undefined;
-      }
-
-      return getter.call(receiver);
-    }
-  };
-
   babelHelpers.inherits = function (subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -95,8 +72,14 @@
 
   babelHelpers;
 
+  var rendererShape = React.PropTypes.shape({
+    renderFont: React.PropTypes.func.isRequired,
+    renderStatic: React.PropTypes.func.isRequired,
+    renderRule: React.PropTypes.func.isRequired,
+    renderKeyframe: React.PropTypes.func.isRequired
+  });
 
-  function __commonjs(fn, module) { return module = { exports: {} }, fn(module, module.exports), module.exports; }
+  var rendererShape$1 = rendererShape.isRequired;
 
   var Provider = function (_Component) {
     babelHelpers.inherits(Provider, _Component);
@@ -107,11 +90,21 @@
     }
 
     babelHelpers.createClass(Provider, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        var _props = this.props;
+        var mountNode = _props.mountNode;
+        var renderer = _props.renderer;
+
+
+        if (mountNode) {
+          fela.render(renderer, mountNode);
+        }
+      }
+    }, {
       key: 'getChildContext',
       value: function getChildContext() {
-        return {
-          fela: this.props.renderer.render.bind(this.props.renderer)
-        };
+        return { renderer: this.props.renderer };
       }
     }, {
       key: 'render',
@@ -120,184 +113,17 @@
       }
     }]);
     return Provider;
-  }(react.Component);
+  }(React.Component);
 
-  Provider.propTypes = { renderer: react.PropTypes.object.isRequired };
-  Provider.childContextTypes = { fela: react.PropTypes.func.isRequired };
+  Provider.propTypes = { renderer: rendererShape$1 };
+  Provider.childContextTypes = { renderer: rendererShape$1 };
 
-  var defaultMapper = function defaultMapper(props) {
-    return props;
-  };
+  function connect(styleMapper) {
+    return function (Comp) {
+      var _class, _temp;
 
-  function bindPropsToFela() {
-    var mapper = arguments.length <= 0 || arguments[0] === undefined ? defaultMapper : arguments[0];
-
-    return function (component) {
-      // handle functional Components
-      if (!component.prototype.setState) {
-        var enhancedComponent = function enhancedComponent(props, context) {
-          var fela = function fela(selector, additionalProps, plugins) {
-            return context.fela(selector, additionalProps ? babelHelpers.extends({}, mapper(props), additionalProps) : mapper(props), plugins);
-          };
-          return component(babelHelpers.extends({}, props, { fela: fela }), context);
-        };
-
-        enhancedComponent.contextTypes = babelHelpers.extends({}, component.contextTypes, {
-          fela: react.PropTypes.func.isRequired
-        });
-
-        return enhancedComponent;
-      }
-
-      // handle stateful class Components
-
-      var EnhancedComponent = function (_component) {
-        babelHelpers.inherits(EnhancedComponent, _component);
-
-        function EnhancedComponent(props, context) {
-          babelHelpers.classCallCheck(this, EnhancedComponent);
-
-          var _this = babelHelpers.possibleConstructorReturn(this, Object.getPrototypeOf(EnhancedComponent).call(this, props, context));
-
-          _this.fela = function (selector, additionalProps, plugins) {
-            return context.fela(selector, additionalProps ? babelHelpers.extends({}, mapper(props), additionalProps) : mapper(props), plugins);
-          };
-          return _this;
-        }
-
-        return EnhancedComponent;
-      }(component);
-
-      EnhancedComponent.contextTypes = babelHelpers.extends({}, component.contextTypes, {
-        fela: react.PropTypes.func.isRequired
-      });
-
-      return EnhancedComponent;
-    };
-  }
-
-  var emptyFunction = __commonjs(function (module) {
-  "use strict";
-
-  /**
-   * Copyright (c) 2013-present, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   * 
-   */
-
-  function makeEmptyFunction(arg) {
-    return function () {
-      return arg;
-    };
-  }
-
-  /**
-   * This function accepts and discards inputs; it has no side effects. This is
-   * primarily useful idiomatically for overridable function endpoints which
-   * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-   */
-  var emptyFunction = function emptyFunction() {};
-
-  emptyFunction.thatReturns = makeEmptyFunction;
-  emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-  emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-  emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-  emptyFunction.thatReturnsThis = function () {
-    return this;
-  };
-  emptyFunction.thatReturnsArgument = function (arg) {
-    return arg;
-  };
-
-  module.exports = emptyFunction;
-  });
-
-  var require$$0 = (emptyFunction && typeof emptyFunction === 'object' && 'default' in emptyFunction ? emptyFunction['default'] : emptyFunction);
-
-  var warning = __commonjs(function (module) {
-  /**
-   * Copyright 2014-2015, Facebook, Inc.
-   * All rights reserved.
-   *
-   * This source code is licensed under the BSD-style license found in the
-   * LICENSE file in the root directory of this source tree. An additional grant
-   * of patent rights can be found in the PATENTS file in the same directory.
-   *
-   */
-
-  'use strict';
-
-  var emptyFunction = require$$0;
-
-  /**
-   * Similar to invariant but only logs a warning if the condition is not met.
-   * This can be used to log issues in development environments in critical
-   * paths. Removing the logging code for production environments will keep the
-   * same logic and follow the same code paths.
-   */
-
-  var warning = emptyFunction;
-
-  if (true) {
-    warning = function warning(condition, format) {
-      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        args[_key - 2] = arguments[_key];
-      }
-
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        var argIndex = 0;
-        var message = 'Warning: ' + format.replace(/%s/g, function () {
-          return args[argIndex++];
-        });
-        if (typeof console !== 'undefined') {
-          console.error(message);
-        }
-        try {
-          // --- Welcome to debugging React ---
-          // This error was thrown as a convenience so that you can use this stack
-          // to find the callsite that caused this warning to fire.
-          throw new Error(message);
-        } catch (x) {}
-      }
-    };
-  }
-
-  module.exports = warning;
-  });
-
-  var warning$1 = (warning && typeof warning === 'object' && 'default' in warning ? warning['default'] : warning);
-
-  var defaultMapper$1 = function defaultMapper(state) {
-    return state;
-  };
-
-  function bindStateToFela() {
-    var mapper = arguments.length <= 0 || arguments[0] === undefined ? defaultMapper$1 : arguments[0];
-
-    return function (component) {
-      // handle functional Components
-      if (!component.prototype.setState) {
-        warning$1(false, 'Binding state to Fela does not work with functional Components. They do not have state at all.');
-        return component;
-      }
-
-      // handle stateful class Components
-
-      var EnhancedComponent = function (_component) {
-        babelHelpers.inherits(EnhancedComponent, _component);
+      return _temp = _class = function (_Component) {
+        babelHelpers.inherits(EnhancedComponent, _Component);
 
         function EnhancedComponent() {
           babelHelpers.classCallCheck(this, EnhancedComponent);
@@ -307,29 +133,22 @@
         babelHelpers.createClass(EnhancedComponent, [{
           key: 'render',
           value: function render() {
-            var _this2 = this;
+            // invoke props and renderer to render all styles
+            var styles = styleMapper(this.props)(this.context.renderer);
 
-            this.fela = function (selector, additionalProps, plugins) {
-              return _this2.context.fela(selector, additionalProps ? babelHelpers.extends({}, mapper(_this2.state, _this2.props), additionalProps) : mapper(_this2.state, _this2.props), plugins);
-            };
-            return babelHelpers.get(Object.getPrototypeOf(EnhancedComponent.prototype), 'render', this).call(this);
+            return React__default.createElement(Comp, babelHelpers.extends({}, this.props, { styles: styles }));
           }
         }]);
         return EnhancedComponent;
-      }(component);
-
-      EnhancedComponent.contextTypes = babelHelpers.extends({}, component.contextTypes, {
-        fela: react.PropTypes.func.isRequired
-      });
-
-      return EnhancedComponent;
+      }(React.Component), _class.contextTypes = babelHelpers.extends({}, Comp.contextTypes, {
+        renderer: rendererShape$1
+      }), _temp;
     };
   }
 
   var index = {
     Provider: Provider,
-    bindPropsToFela: bindPropsToFela,
-    bindStateToFela: bindStateToFela
+    connect: connect
   };
 
   return index;
