@@ -14,14 +14,15 @@ const errorOnFail = err => {
 
 const babelPlugin = babel({
   babelrc: false,
-  presets: [ 'es2015-rollup', 'stage-0' ],
-  plugins: [ 'transform-dev-warning', 'transform-node-env-inline' ]
+  presets: [ 'es2015-rollup', 'stage-0', 'react' ],
+  plugins: [ 'transform-dev-warning', 'transform-node-env-inline', 'transform-class-properties' ]
 })
 const nodeResolverPlugin = nodeResolver({
   jsnext: true,
   main: true,
-  skip: 'react'
+  skip: [ 'react', 'fela' ]
 })
+
 const commonJSPlugin = commonjs({ include: 'node_modules/**' })
 const uglifyPlugin = uglify()
 
@@ -38,7 +39,8 @@ function bundleConfig(minify) {
   return {
     format: 'umd',
     globals: {
-      react: 'React'
+      react: 'React',
+      fela: 'Fela'
     },
     moduleName: 'ReactFela',
     dest: 'dist/react-fela' + (minify ? '.min' : '') + '.js',

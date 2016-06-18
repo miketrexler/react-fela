@@ -1,6 +1,6 @@
 {
   "name": "react-fela",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "React bindings for Fela",
   "repository": "https://github.com/rofrischmann/react-fela/",
   "main": "lib/index.js",
@@ -23,16 +23,14 @@
   "scripts": {
     "babel": "babel -d lib modules",
     "dist": "cross-env NODE_ENV=production babel-node scripts/buildPackage && cross-env NODE_ENV=development babel-node scripts/buildPackage",
-    "example": "webpack-dev-server --config --no-info --content-base ./example/",
-    "example:server": "babel-node example/server.js",
-    "example:universal": "concurrent --kill-others \"npm run example\" \"npm run example:server\"",
     "lint": "eslint modules",
     "prepare": "npm run lint && npm test && npm run dist && npm run babel",
     "release": "npm run prepare && npm publish",
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --opts test/mocha.opts"
   },
   "peerDependencies": {
-    "react": "^15.1.0"
+    "react": "^15.1.0",
+    "fela": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -40,6 +38,7 @@
     "babel-core": "^6.6.0",
     "babel-eslint": "^5.0.0",
     "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-transform-class-properties": "^6.9.1",
     "babel-plugin-transform-dev-warning": "^0.1.0",
     "babel-plugin-transform-node-env-inline": "^6.8.0",
     "babel-preset-es2015": "^6.6.0",
@@ -68,7 +67,7 @@
     "estraverse-fb": "^1.3.1",
     "express": "^4.13.4",
     "express-http-proxy": "^0.6.0",
-    "fela": "^1.0.0-alpha.7",
+    "fela": "^1.0.0-beta.2",
     "fela-plugin-fallback-value": "^1.0.0-alpha.5",
     "fela-plugin-prefixer": "^1.0.0-alpha.5",
     "fela-plugin-unit": "^1.0.0-alpha.5",
@@ -93,7 +92,8 @@
     ],
     "plugins": [
       "add-module-exports",
-      "transform-dev-warning"
+      "transform-dev-warning",
+      "transform-class-properties"
     ]
   },
   "eslintConfig": {

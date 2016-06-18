@@ -1,7 +1,7 @@
 import Provider from './components/Provider'
-import bindFela from './helpers/bindFela'
+import connect from './components/connect'
 
 export default {
   Provider,
-  bindFela
+  connect
 }
