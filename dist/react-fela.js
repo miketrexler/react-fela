@@ -118,7 +118,7 @@
   Provider.propTypes = { renderer: rendererShape$1 };
   Provider.childContextTypes = { renderer: rendererShape$1 };
 
-  function connect(styleMapper) {
+  function connect(mapStylesToProps) {
     return function (Comp) {
       var _class, _temp;
 
@@ -132,15 +132,17 @@
 
         babelHelpers.createClass(EnhancedComponent, [{
           key: 'render',
+
+          // reuse the initial displayName name
           value: function render() {
             // invoke props and renderer to render all styles
-            var styles = styleMapper(this.props)(this.context.renderer);
+            var styles = mapStylesToProps(this.props)(this.context.renderer);
 
             return React__default.createElement(Comp, babelHelpers.extends({}, this.props, { styles: styles }));
           }
         }]);
         return EnhancedComponent;
-      }(React.Component), _class.contextTypes = babelHelpers.extends({}, Comp.contextTypes, {
+      }(React.Component), _class.displayName = Comp.displayName || Comp.name || 'Component', _class.contextTypes = babelHelpers.extends({}, Comp.contextTypes, {
         renderer: rendererShape$1
       }), _temp;
     };
