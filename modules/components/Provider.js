@@ -7,7 +7,7 @@ export default class Provider extends Component {
   static propTypes =  { renderer: rendererShape };
   static childContextTypes = { renderer: rendererShape };
 
-  componentWillMount() {
+  componentDidMount() {
     const { mountNode, renderer } = this.props
 
     if (mountNode) {
