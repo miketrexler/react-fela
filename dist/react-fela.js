@@ -90,8 +90,8 @@
     }
 
     babelHelpers.createClass(Provider, [{
-      key: 'componentWillMount',
-      value: function componentWillMount() {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
         var _props = this.props;
         var mountNode = _props.mountNode;
         var renderer = _props.renderer;
