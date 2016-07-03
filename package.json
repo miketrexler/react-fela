@@ -1,6 +1,6 @@
 {
   "name": "react-fela",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "React bindings for Fela",
   "repository": "https://github.com/rofrischmann/react-fela/",
   "main": "lib/index.js",

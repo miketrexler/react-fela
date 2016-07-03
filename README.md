@@ -5,10 +5,10 @@ Official React bindings for Fela.
 <img alt="TravisCI" src="https://travis-ci.org/rofrischmann/react-fela.svg?branch=master">
 <a href="https://codeclimate.com/github/rofrischmann/react-fela/coverage"><img alt="Test Coverage" src="https://codeclimate.com/github/rofrischmann/react-fela/badges/coverage.svg"></a>
 <img alt="npm downloads" src="https://img.shields.io/npm/dm/react-fela.svg">
-<img alt="gzipped size" src="https://img.shields.io/badge/gzipped-~1.0kb-brightgreen.svg">
+<img alt="gzipped size" src="https://img.shields.io/badge/gzipped-~1.16kb-brightgreen.svg">
 
 
-This package only includes React bindings for [ Fela](http://github.com/rofrischmann/fela). <br>
+This package only includes React bindings for [Fela](http://github.com/rofrischmann/fela). <br>
 It assumes you already know about Fela and how to use it.
 
 > [Learn about Fela!](http://github.com/rofrischmann/fela)
@@ -31,9 +31,10 @@ Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each pa
 ```
 
 ## Documentation
-#### [API reference](docs/api)
-* [`<Provider renderer [mountNode]>`](docs/api/Provider.md)
-* [`connect(mapStylesToProps)`](docs/api/connect.md)
+#### API reference
+* [`<Provider renderer [mountNode]>`](docs/Provider.md)
+* [`connect(mapStylesToProps)`](docs/connect.md)
+* [`createComponent(rule, [type])`](docs/createComponent.md)
 
 ## Usage
 For more information and best practices on how to effectively use this package, please check out the main [Fela documention](http://fela.js.org). There you will also find some usage examples. This package only contains the pure API reference documentation.

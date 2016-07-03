@@ -148,9 +148,24 @@
     };
   }
 
+  function createComponent(rule) {
+    var type = arguments.length <= 1 || arguments[1] === undefined ? 'div' : arguments[1];
+
+    var component = function component(props, _ref) {
+      var renderer = _ref.renderer;
+      return React.createElement(type, babelHelpers.extends({}, props, {
+        className: renderer.renderRule(rule, props)
+      }), props.children || null);
+    };
+
+    component.contextTypes = { renderer: rendererShape$1 };
+    return component;
+  }
+
   var index = {
     Provider: Provider,
-    connect: connect
+    connect: connect,
+    createComponent: createComponent
   };
 
   return index;
