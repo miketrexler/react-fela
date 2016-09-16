@@ -2,11 +2,23 @@ import { createElement } from 'react'
 
 import rendererShape from '../utils/rendererShape'
 
-export default function createComponent(rule, type = 'div') {
-  const component = (props, { renderer }) => createElement(type, {
-    ...props,
-    className: renderer.renderRule(rule, props)
-  }, props.children || null)
+export default function createComponent(rule, type = 'div', passThroughProps = {}) {
+  const component = (props, { renderer }) => {
+    // extract children as a special prop
+    const { children, ...felaProps } = props
+
+    // filter props to extract props to pass through
+    const componentProps = Object.keys(passThroughProps).reduce((output, prop) => {
+      output[prop] = felaProps[prop]
+      if (!passThroughProps[prop]) {
+        delete felaProps[prop]
+      }
+      return output
+    }, { })
+
+    componentProps.className = renderer.renderRule(rule, felaProps)
+    return createElement(type, componentProps, children)
+  }
 
   component.contextTypes = { renderer: rendererShape }
   return component
