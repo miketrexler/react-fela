@@ -20,14 +20,14 @@ npm i --save react-fela
 ```
 
 Assuming you are using [npm](https://www.npmjs.com) as your package mananger you can basically just `npm install` all packages. <br>
-Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each package within the `dist` folder. You can easily use them via [npmcdn](https://npmcdn.com/).
+Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each package within the `dist` folder. You can easily use them via [unpkg](https://unpkg.com/).
 > **Caution**: You need to include both React and Fela on your own as well.
 
 ```HTML
 <!-- Development build (with warnings)  -->
-<script src="https://npmcdn.com/react-fela@3.0.0/dist/react-fela.js"></script>
+<script src="https://unpkg.com/react-fela@3.0.0/dist/react-fela.js"></script>
 <!-- Production build (minified)  -->
-<script src="https://npmcdn.com/react-fela@3.0.0/dist/react-fela.min.js"></script>
+<script src="https://unpkg.com/react-fela@3.0.0/dist/react-fela.min.js"></script>
 ```
 
 ## Documentation
