@@ -62,6 +62,18 @@
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   };
 
+  babelHelpers.objectWithoutProperties = function (obj, keys) {
+    var target = {};
+
+    for (var i in obj) {
+      if (keys.indexOf(i) >= 0) continue;
+      if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+      target[i] = obj[i];
+    }
+
+    return target;
+  };
+
   babelHelpers.possibleConstructorReturn = function (self, call) {
     if (!self) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -150,12 +162,27 @@
 
   function createComponent(rule) {
     var type = arguments.length <= 1 || arguments[1] === undefined ? 'div' : arguments[1];
+    var passThroughProps = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
     var component = function component(props, _ref) {
       var renderer = _ref.renderer;
-      return React.createElement(type, babelHelpers.extends({}, props, {
-        className: renderer.renderRule(rule, props)
-      }), props.children || null);
+
+      // extract children as a special prop
+      var children = props.children;
+      var felaProps = babelHelpers.objectWithoutProperties(props, ['children']);
+
+      // filter props to extract props to pass through
+
+      var componentProps = Object.keys(passThroughProps).reduce(function (output, prop) {
+        output[prop] = felaProps[prop];
+        if (!passThroughProps[prop]) {
+          delete felaProps[prop];
+        }
+        return output;
+      }, {});
+
+      componentProps.className = renderer.renderRule(rule, felaProps);
+      return React.createElement(type, componentProps, children);
     };
 
     component.contextTypes = { renderer: rendererShape$1 };
