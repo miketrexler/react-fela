@@ -1,11 +1,11 @@
 # React Fela
 
-Official React bindings for Fela.
+Official [React](https://github.com/facebook/react) bindings for Fela.
 
 <img alt="TravisCI" src="https://travis-ci.org/rofrischmann/react-fela.svg?branch=master">
 <a href="https://codeclimate.com/github/rofrischmann/react-fela/coverage"><img alt="Test Coverage" src="https://codeclimate.com/github/rofrischmann/react-fela/badges/coverage.svg"></a>
 <img alt="npm downloads" src="https://img.shields.io/npm/dm/react-fela.svg">
-<img alt="gzipped size" src="https://img.shields.io/badge/gzipped-~1.16kb-brightgreen.svg">
+<img alt="gzipped size" src="https://img.shields.io/badge/gzipped-1.16kb-brightgreen.svg">
 
 
 This package only includes React bindings for [Fela](http://github.com/rofrischmann/fela). <br>
@@ -25,19 +25,19 @@ Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each pa
 
 ```HTML
 <!-- Development build (with warnings)  -->
-<script src="https://npmcdn.com/react-fela@2.0.0/dist/react-fela.js"></script>
+<script src="https://npmcdn.com/react-fela@3.0.0/dist/react-fela.js"></script>
 <!-- Production build (minified)  -->
-<script src="https://npmcdn.com/react-fela@2.0.0/dist/react-fela.min.js"></script>
+<script src="https://npmcdn.com/react-fela@3.0.0/dist/react-fela.min.js"></script>
 ```
 
 ## Documentation
 #### API reference
 * [`<Provider renderer [mountNode]>`](docs/Provider.md)
 * [`connect(mapStylesToProps)`](docs/connect.md)
-* [`createComponent(rule, [type])`](docs/createComponent.md)
+* [`createComponent(rule, [type], [passThroughProps])`](docs/createComponent.md)
 
 ## Usage
-For more information and best practices on how to effectively use this package, please check out the main [Fela documention](http://fela.js.org). There you will also find some usage examples. This package only contains the pure API reference documentation.
+For more information and best practices on how to effectively use this package, please check out the main [Fela Documention - Usage with React](http://fela.js.org/docs/guides/UsageWithReact.html). There you will also find some usage examples. This package only contains the pure API reference documentation.
 
 ## License
 Fela is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
