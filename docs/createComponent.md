@@ -1,4 +1,4 @@
-# `createComponent(rule, [type])`
+# `createComponent(rule, [type], [passThroughProps])`
 
 This HoCs ([Higher-order Components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750#.njbld18x8)) creates a presentational React component using the rendered `rule` as className.
 
