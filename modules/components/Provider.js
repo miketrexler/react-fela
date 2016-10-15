@@ -1,11 +1,9 @@
-import { Component } from 'react'
+import { Component, PropTypes } from 'react'
 import { render } from 'fela'
 
-import rendererShape from '../utils/rendererShape'
-
 export default class Provider extends Component {
-  static propTypes =  { renderer: rendererShape };
-  static childContextTypes = { renderer: rendererShape };
+  static propTypes =  { renderer: PropTypes.object };
+  static childContextTypes = { renderer: PropTypes.object };
 
   componentDidMount() {
     const { mountNode, renderer } = this.props

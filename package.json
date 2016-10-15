@@ -1,6 +1,6 @@
 {
   "name": "react-fela",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "React bindings for Fela",
   "repository": "https://github.com/rofrischmann/react-fela/",
   "main": "lib/index.js",
@@ -29,8 +29,8 @@
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --opts test/mocha.opts"
   },
   "peerDependencies": {
-    "react": "^15.1.0",
-    "fela": "^1.2.0"
+    "react": "^15.3.2",
+    "fela": "^3.0.1"
   },
   "devDependencies": {
     "babel": "^6.5.2",

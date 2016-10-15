@@ -1,6 +1,4 @@
-import { createElement } from 'react'
-
-import rendererShape from '../utils/rendererShape'
+import { createElement, PropTypes } from 'react'
 
 export default function createComponent(rule, type = 'div', passThroughProps = {}) {
   const component = (props, { renderer }) => {
@@ -20,6 +18,6 @@ export default function createComponent(rule, type = 'div', passThroughProps = {
     return createElement(type, componentProps, children)
   }
 
-  component.contextTypes = { renderer: rendererShape }
+  component.contextTypes = { renderer: PropTypes.object }
   return component
 }

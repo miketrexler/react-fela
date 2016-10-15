@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-
-import rendererShape from '../utils/rendererShape'
+import React, { Component, PropTypes } from 'react'
 
 export default function connect(mapStylesToProps) {
   return Comp => class EnhancedComponent extends Component {
@@ -9,7 +7,7 @@ export default function connect(mapStylesToProps) {
 
     static contextTypes = {
       ...Comp.contextTypes,
-      renderer: rendererShape
+      renderer: PropTypes.object
     };
 
     render() {
