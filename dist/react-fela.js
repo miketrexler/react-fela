@@ -84,15 +84,6 @@
 
   babelHelpers;
 
-  var rendererShape = React.PropTypes.shape({
-    renderFont: React.PropTypes.func.isRequired,
-    renderStatic: React.PropTypes.func.isRequired,
-    renderRule: React.PropTypes.func.isRequired,
-    renderKeyframe: React.PropTypes.func.isRequired
-  });
-
-  var rendererShape$1 = rendererShape.isRequired;
-
   var Provider = function (_Component) {
     babelHelpers.inherits(Provider, _Component);
 
@@ -127,8 +118,8 @@
     return Provider;
   }(React.Component);
 
-  Provider.propTypes = { renderer: rendererShape$1 };
-  Provider.childContextTypes = { renderer: rendererShape$1 };
+  Provider.propTypes = { renderer: React.PropTypes.object };
+  Provider.childContextTypes = { renderer: React.PropTypes.object };
 
   function connect(mapStylesToProps) {
     return function (Comp) {
@@ -155,7 +146,7 @@
         }]);
         return EnhancedComponent;
       }(React.Component), _class.displayName = Comp.displayName || Comp.name || 'Component', _class.contextTypes = babelHelpers.extends({}, Comp.contextTypes, {
-        renderer: rendererShape$1
+        renderer: React.PropTypes.object
       }), _temp;
     };
   }
@@ -185,7 +176,7 @@
       return React.createElement(type, componentProps, children);
     };
 
-    component.contextTypes = { renderer: rendererShape$1 };
+    component.contextTypes = { renderer: React.PropTypes.object };
     return component;
   }
 
