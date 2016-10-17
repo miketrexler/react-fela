@@ -14,7 +14,8 @@ export default function createComponent(rule, type = 'div', passThroughProps = {
       return output
     }, { })
 
-    const className = props.className ? props.className + ' ' : '';
+    const className = props.className ? props.className + ' ' : ''
+    delete felaProps['className']
     componentProps.className = className + renderer.renderRule(rule, felaProps)
     return createElement(type, componentProps, children)
   }
